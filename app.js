@@ -1,9 +1,12 @@
 'use strict';
 
 var filePathArr = [];
-
-var usedImages = {};
+var currentImagesArr = [];
+var previousImagesArr = [];
 var usedImagesCount = 0;
+var img1 = document.getElementById('img-1');
+var img3 = document.getElementById('img-3');
+var img2 = document.getElementById('img-2');
 
 function Image(name, filePath, timesShown, timesClicked) {
   this.name = name;
@@ -14,14 +17,6 @@ function Image(name, filePath, timesShown, timesClicked) {
 
 }
 
-randomImage = function() {
-  var num = Math.floor(Math.random() * filePathArr.length);
-};
-
-for (var i = 0; i < filePathArr.length; i++) {
-  var imgChoice = filePathArr[randomImage()];
-  
-}
 var bag = new Image (bag, 'images/bag.jpg');
 var banana = new Image (banana, 'images/banana.jpg');
 var bathroom = new Image (bathroom, 'images/bathroom.jpg');
@@ -42,3 +37,23 @@ var unicorn = new Image (unicorn, 'images/unicorn.jpg');
 var usb = new Image (usb, 'images/usb.gif');
 var waterCan = new Image (waterCan, 'images/water-can.jpg');
 var wineGlass = new Image (wineGlass, 'images/wine-glass.jpg');
+console.log(filePathArr);
+
+var randomImage = function() {
+  var num = Math.floor(Math.random() * filePathArr.length);
+  return num;
+};
+
+var imageChoice = function() {
+  var imgChoice1 = filePathArr[randomImage()];
+  console.log(imgChoice1);
+  img1.setAttribute('src', imgChoice1);
+  var imgChoice2 = filePathArr[randomImage()];
+  console.log(imgChoice2);
+  img2.setAttribute('src', imgChoice2);
+  var imgChoice3 = filePathArr[randomImage()];
+  console.log(imgChoice3);
+  img3.setAttribute('src', imgChoice3);
+};
+
+imageChoice();

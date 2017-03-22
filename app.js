@@ -3,10 +3,10 @@
 
 var listOfObjectsArray = [];
 var timesShownArray = [];
-var nameOfObjectsArray = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum.jpg', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'sweep', 'tauntaun', 'unicorn', 'usb', 'water-can', 'wine-glass'];
-var itemImagePath = ['bag.jpg', 'banana.jpg', 'bathroom.jpg', 'boots.jpg', 'breakfast.jpg', 'bubblegum.jpg', 'chair.jpg', 'cthulhu.jpg', 'dog-duck.jpg', 'dragon.jpg', 'pen.jpg', 'pet-sweep.jpg', 'scissors.jpg', 'shark.jpg', 'sweep.png', 'tauntaun.jpg', 'unicorn.jpg', 'usb.gif', 'water-can.jpg', 'wine-glass.jpg'];
 var previousImagesIndexArr = [];
 var itemNumberClicksArray = [];
+var nameOfObjectsArray = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum.jpg', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'sweep', 'tauntaun', 'unicorn', 'usb', 'water-can', 'wine-glass'];
+var itemImagePath = ['bag.jpg', 'banana.jpg', 'bathroom.jpg', 'boots.jpg', 'breakfast.jpg', 'bubblegum.jpg', 'chair.jpg', 'cthulhu.jpg', 'dog-duck.jpg', 'dragon.jpg', 'pen.jpg', 'pet-sweep.jpg', 'scissors.jpg', 'shark.jpg', 'sweep.png', 'tauntaun.jpg', 'unicorn.jpg', 'usb.gif', 'water-can.jpg', 'wine-glass.jpg'];
 var sumOfUserClicks = 0;
 var clickLimit = 25;
 var img1 = document.getElementById('img-1');
@@ -26,6 +26,12 @@ function ProductObject(name, filePath) {
 for (var i = 0; i < itemImagePath.length; i++) {
   var filePath = 'images/' + itemImagePath[i];
   new ProductObject(nameOfObjectsArray[i], filePath);
+}
+if(localStorage.sumOfDataArray){
+  var someNewArray = JSON.parse(localStorage.sumOfDataArray);
+  for(var i = 0; i < someNewArray.length; i++){
+    listOfObjectsArray[i].itemClick += someNewArray[i].itemClick;
+  }
 }
 
 function randomImageNumberFunc() {
@@ -70,7 +76,7 @@ function handleTheClick(event) {
   // this.reset();
 
   if (sumOfUserClicks === clickLimit) {
-
+    localStorage.sumOfDataArray = JSON.stringify(listOfObjectsArray);
     // localStorage['sumOfDataArray'] += JSON.stringify(sumOfDataArray);
     img1.removeEventListener('click', handleTheClick);
     img2.removeEventListener('click', handleTheClick);
@@ -139,5 +145,3 @@ function renderChart() {
 ///////////// local storage
 /////////////
 ///////////////////////////////////////
-var sumOfDataArray = [];
-localStorage['dataArray'] = JSON.stringify(localStorage['dataArray']);

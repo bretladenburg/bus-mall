@@ -95,16 +95,18 @@ function renderChart() {
       responsive:true,
       scales: {
         xAxes: [{
-          fontColor: 'white',
-          scaleLineColor: 'white',
-          gridLines: {
-            color: 'white',
+          ticks: {
+            fontColor: 'white',
+            scaleLineColor: 'white',
+            gridLines: {
+              color: 'white',
+            }
           }
         }],
         yAxes: [{
-          fontColor: 'white',
           ticks: {
             fontColor: 'white',
+            scaleLineColor: 'white',
             beginAtZero:true
           },
           gridLines: {

@@ -4,6 +4,7 @@ var productArray = [];
 var nameArr = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum.jpg', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'sweep', 'tauntaun', 'unicorn', 'usb', 'water-can', 'wine-glass'];
 var imageArr = ['bag.jpg', 'banana.jpg', 'bathroom.jpg', 'boots.jpg', 'breakfast.jpg', 'bubblegum.jpg', 'chair.jpg', 'cthulhu.jpg', 'dog-duck.jpg', 'dragon.jpg', 'pen.jpg', 'pet-sweep.jpg', 'scissors.jpg', 'shark.jpg', 'sweep.png', 'tauntaun.jpg', 'unicorn.jpg', 'usb.gif', 'water-can.jpg', 'wine-glass.jpg'];
 var previousImagesIndexArr = [];
+var dataArray = [];
 var totalClicks = 0;
 var clickLimit = 25;
 var img1 = document.getElementById('img-1');
@@ -57,12 +58,13 @@ function handleTheClick(event) {
   totalClicks++;
   var productIndex = this.alt;
   productArray[productIndex].itemClick++;
+  dataArray.push(productArray[productIndex].itemClick);
 
   if (totalClicks === clickLimit) {
     img1.removeEventListener('click', handleTheClick);
     img2.removeEventListener('click', handleTheClick);
     img3.removeEventListener('click', handleTheClick);
-    productClicks();
+    renderChart();
   }
 };
 
@@ -70,51 +72,46 @@ img1.addEventListener('click', handleTheClick);
 img2.addEventListener('click', handleTheClick);
 img3.addEventListener('click', handleTheClick);
 
-function productClicks() {
-  var content = document.getElementById('content');
-  var ul = document.createElement('ul');
-  ul.setAttribute('id', 'vote-list');
-  content.appendChild(ul);
-  var li = document.createElement('li');
-  for (var i = 0; i < productArray.length; i++) {
-    var li = document.createElement('li');
-    var dataStr = productArray[i].itemClick + ' clicks for ' + productArray[i].name;
-    li.innerText = dataStr;
-    ul.appendChild(li);
-  }
-}
+var canvas = document.getElementById('canvas');
+var ctx = canvas.getContext('2d');
 
-// var bag = new Image (bag, 'images/bag.jpg');
-// var banana = new Image (banana, 'images/banana.jpg');
-// var bathroom = new Image (bathroom, 'images/bathroom.jpg');
-// var boots = new Image (boots, 'images/boots.jpg');
-// var breakfast = new Image (breakfast, 'images/breakfast.jpg');
-// var bubblegum = new Image (bubblegum, 'images/bubblegum.jpg');
-// var chair = new Image (chair, 'images/chair.jpg');
-// var cthulhu = new Image (cthulhu, 'images/cthulhu.jpg');
-// var dogDuck = new Image (dogDuck, 'images/dog-duck.jpg');
-// var dragon = new Image (dragon, 'images/dragon.jpg');
-// var pen = new Image (pen, 'images/pen.jpg');
-// var petSweep = new Image (petSweep, 'images/pet-sweep.jpg');
-// var scissors = new Image (scissors, 'images/scissors.jpg');
-// var shark = new Image (shark, 'images/shark.jpg');
-// var sweep = new Image (sweep, 'images/sweep.png');
-// var tauntaun = new Image (tauntaun, 'images/tauntaun.jpg');
-// var unicorn = new Image (unicorn, 'images/unicorn.jpg');
-// var usb = new Image (usb, 'images/usb.gif');
-// var waterCan = new Image (waterCan, 'images/water-can.jpg');
-// var wineGlass = new Image (wineGlass, 'images/wine-glass.jpg');
+function renderChart() {
+  var data = {
+    labels: nameArr,
+    datasets: [{
+      label: 'Times of images clicked',
+      data: dataArray,
+      backgroundColor: '#F5811F',
+      borderColor: 'white'
+    }]
+  };
 
-// var imageChoice = function() {
-//   var imgChoice1 = filePathArr[randomImage()];
-//   console.log(imgChoice1);
-//   img1.setAttribute('src', imgChoice1);
-//   var imgChoice2 = filePathArr[randomImage()];
-//   console.log(imgChoice2);
-//   img2.setAttribute('src', imgChoice2);
-//   var imgChoice3 = filePathArr[randomImage()];
-//   console.log(imgChoice3);
-//   img3.setAttribute('src', imgChoice3);
-// };
-//
-// imageChoice();
+  var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: data,
+    scaleFontColor: 'white',
+    options: {
+      legend: {labels:{fontColor:'white'}},
+      responsive:true,
+      scales: {
+        xAxes: [{
+          fontColor: 'white',
+          scaleLineColor: 'white',
+          gridLines: {
+            color: 'white',
+          }
+        }],
+        yAxes: [{
+          fontColor: 'white',
+          ticks: {
+            fontColor: 'white',
+            beginAtZero:true
+          },
+          gridLines: {
+            color: 'white',
+          }
+        }]
+      }
+    }
+  });
+};

@@ -21,7 +21,7 @@ h2 {
 
 #sect {
   text-align: center;
-  border: solid black 1px;
+  border: solid white 1px;
 }
 
 body {
@@ -30,4 +30,10 @@ background-color: #008D97
 
 #vote-list {
   color: white;
+}
+
+#canvas {
+  color: white;
+  border: none;
+
 }

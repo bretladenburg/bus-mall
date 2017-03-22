@@ -1,45 +1,48 @@
 'use strict';
 
-var productArray = [];
-var nameArr = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum.jpg', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'sweep', 'tauntaun', 'unicorn', 'usb', 'water-can', 'wine-glass'];
-var imageArr = ['bag.jpg', 'banana.jpg', 'bathroom.jpg', 'boots.jpg', 'breakfast.jpg', 'bubblegum.jpg', 'chair.jpg', 'cthulhu.jpg', 'dog-duck.jpg', 'dragon.jpg', 'pen.jpg', 'pet-sweep.jpg', 'scissors.jpg', 'shark.jpg', 'sweep.png', 'tauntaun.jpg', 'unicorn.jpg', 'usb.gif', 'water-can.jpg', 'wine-glass.jpg'];
+
+var listOfObjectsArray = [];
+var timesShownArray = [];
+var nameOfObjectsArray = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum.jpg', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'sweep', 'tauntaun', 'unicorn', 'usb', 'water-can', 'wine-glass'];
+var itemImagePath = ['bag.jpg', 'banana.jpg', 'bathroom.jpg', 'boots.jpg', 'breakfast.jpg', 'bubblegum.jpg', 'chair.jpg', 'cthulhu.jpg', 'dog-duck.jpg', 'dragon.jpg', 'pen.jpg', 'pet-sweep.jpg', 'scissors.jpg', 'shark.jpg', 'sweep.png', 'tauntaun.jpg', 'unicorn.jpg', 'usb.gif', 'water-can.jpg', 'wine-glass.jpg'];
 var previousImagesIndexArr = [];
-var dataArray = [];
-var totalClicks = 0;
+var itemNumberClicksArray = [];
+var sumOfUserClicks = 0;
 var clickLimit = 25;
 var img1 = document.getElementById('img-1');
 var img2 = document.getElementById('img-2');
 var img3 = document.getElementById('img-3');
 
-function Image(name, filePath) {
+//object constructor
+function ProductObject(name, filePath) {
   this.name = name;
   this.filePath = filePath;
   this.itemClick = 0;
   this.imageShown = 0;
-  productArray.push(this);
-
+  listOfObjectsArray.push(this);
 }
 
-for (var i = 0; i < imageArr.length; i++) {
-  var filePath = 'images/' + imageArr[i];
-  new Image(nameArr[i], filePath);
+//writes path prefix for image path
+for (var i = 0; i < itemImagePath.length; i++) {
+  var filePath = 'images/' + itemImagePath[i];
+  new ProductObject(nameOfObjectsArray[i], filePath);
 }
 
-function randomImgIndex() {
-  return Math.floor(Math.random() * imageArr.length);
+function randomImageNumberFunc() {
+  return Math.floor(Math.random() * itemImagePath.length);
 };
 
-function randomImage() {
+function randomImagesGenerator() {
   var currentImagesIndexArr = [];
   while (currentImagesIndexArr.length < 3) {
-    var imageSelector = randomImgIndex();
+    var imageSelector = randomImageNumberFunc();
     if (!currentImagesIndexArr.includes(imageSelector) && !previousImagesIndexArr.includes(imageSelector)) {
       currentImagesIndexArr.push(imageSelector);
     }
   }
-  var prod1 = productArray[currentImagesIndexArr[0]];
-  var prod2 = productArray[currentImagesIndexArr[1]];
-  var prod3 = productArray[currentImagesIndexArr[2]];
+  var prod1 = listOfObjectsArray[currentImagesIndexArr[0]];
+  var prod2 = listOfObjectsArray[currentImagesIndexArr[1]];
+  var prod3 = listOfObjectsArray[currentImagesIndexArr[2]];
   img1.src = prod1.filePath;
   img2.src = prod2.filePath;
   img3.src = prod3.filePath;
@@ -51,22 +54,34 @@ function randomImage() {
   prod2.imageShown++;
   prod3.imageShown++;
 };
-randomImage();
+randomImagesGenerator();
 
 function handleTheClick(event) {
-  randomImage();
-  totalClicks++;
+  randomImagesGenerator();
+  sumOfUserClicks++;
   var productIndex = this.alt;
-  productArray[productIndex].itemClick++;
-  dataArray.push(productArray[productIndex].itemClick);
+  listOfObjectsArray[productIndex].itemClick++;
+  timesShownArray.push(listOfObjectsArray[productIndex].imageShown);
+  itemNumberClicksArray.push(listOfObjectsArray[productIndex].itemClick);
 
-  if (totalClicks === clickLimit) {
+  // var existingData = JSON.parse(localStorage['itemNumberClicksArray']);
+  // // do something to extend that array
+  // localStorage['itemNumberClicksArray'] = JSON.stringify(ingredientsArray);
+  // this.reset();
+
+  if (sumOfUserClicks === clickLimit) {
+
+    // localStorage['sumOfDataArray'] += JSON.stringify(sumOfDataArray);
     img1.removeEventListener('click', handleTheClick);
     img2.removeEventListener('click', handleTheClick);
     img3.removeEventListener('click', handleTheClick);
     renderChart();
   }
 };
+
+// for(var i = 0; i < itemNumberClicksArray.length; i++){
+//   sumOfDataArray.push(itemNumberClicksArray[i].sumOfUserClicks + sumOfDataArray[i]);
+// }
 
 img1.addEventListener('click', handleTheClick);
 img2.addEventListener('click', handleTheClick);
@@ -77,12 +92,16 @@ var ctx = canvas.getContext('2d');
 
 function renderChart() {
   var data = {
-    labels: nameArr,
+    labels: nameOfObjectsArray,
     datasets: [{
-      label: 'Times of images clicked',
-      data: dataArray,
+      label: 'Times Clicked',
+      data: itemNumberClicksArray,
       backgroundColor: '#F5811F',
       borderColor: 'white'
+    }, {
+      label: 'Times Shown',
+      data: timesShownArray,
+      backgroundColor: 'white',
     }]
   };
 
@@ -115,3 +134,10 @@ function renderChart() {
     }
   });
 };
+///////////////////////////////////////
+/////////////
+///////////// local storage
+/////////////
+///////////////////////////////////////
+var sumOfDataArray = [];
+localStorage['dataArray'] = JSON.stringify(localStorage['dataArray']);

@@ -2,27 +2,32 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <title>Bus Mall</title>
     <link rel="stylesheet" href="styles.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
     <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
-    <title>Bus Mall</title>
+    <style media="screen">
+      canvas {
+        border: thin solid white;
+      }
+      </style>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js" charset="utf-8"></script>
   </head>
   <body>
     <main id="content">
-    <section>
-      <h1>Bus Mall Image Generator</h1>
-    </section>
-    <section>
-      <h2>Take a look at the images and click on the one that you like the best!</h2>
-    </section>
-    <section id="sect">
-      <!-- some javascript that generates the images. -->
-      <img src="https://placehold.it/200x200" alt="" id="img-1">
-      <img src="https://placehold.it/200x200" alt="" id="img-2">
-      <img src="https://placehold.it/200x200" alt="" id="img-3">
-    </section>
-  </main>
-    <!-- <script src="chart.js"></script> -->
-    <script src="app.js"></script>
+      <section>
+        <h1>Bus Mall Image Generator</h1>
+      </section>
+      <section>
+        <h2>Take a look at the images and click on the one that you like the best!</h2>
+      </section>
+      <section id="sect">
+        <img src="https://placehold.it/200x200" alt="" id="img-1">
+        <img src="https://placehold.it/200x200" alt="" id="img-2">
+        <img src="https://placehold.it/200x200" alt="" id="img-3">
+      </section>
+      <canvas id="canvas" width="1500" height="300"></canvas>
+    </main>
+      <script src="app.js"></script>
   </body>
 </html>

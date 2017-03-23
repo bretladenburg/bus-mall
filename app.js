@@ -27,10 +27,12 @@ for (var i = 0; i < itemImagePath.length; i++) {
   var filePath = 'images/' + itemImagePath[i];
   new ProductObject(nameOfObjectsArray[i], filePath);
 }
-if(localStorage.sumOfDataArray){
-  var someNewArray = JSON.parse(localStorage.sumOfDataArray);
-  for(var i = 0; i < someNewArray.length; i++){
-    listOfObjectsArray[i].itemClick += someNewArray[i].itemClick;
+function localStorage() {
+  if(localStorage.sumOfDataArray){
+    var someNewArray = JSON.parse(localStorage.sumOfDataArray);
+    for(var i = 0; i < someNewArray.length; i++){
+      listOfObjectsArray[i].itemClick += someNewArray[i].itemClick;
+    }
   }
 }
 
@@ -70,14 +72,9 @@ function handleTheClick(event) {
   timesShownArray.push(listOfObjectsArray[productIndex].imageShown);
   itemNumberClicksArray.push(listOfObjectsArray[productIndex].itemClick);
 
-  // var existingData = JSON.parse(localStorage['itemNumberClicksArray']);
-  // // do something to extend that array
-  // localStorage['itemNumberClicksArray'] = JSON.stringify(ingredientsArray);
-  // this.reset();
-
   if (sumOfUserClicks === clickLimit) {
+    localStorage();
     localStorage.sumOfDataArray = JSON.stringify(listOfObjectsArray);
-    // localStorage['sumOfDataArray'] += JSON.stringify(sumOfDataArray);
     img1.removeEventListener('click', handleTheClick);
     img2.removeEventListener('click', handleTheClick);
     img3.removeEventListener('click', handleTheClick);
@@ -120,8 +117,10 @@ function renderChart() {
       responsive:true,
       scales: {
         xAxes: [{
-          fontColor: 'white',
-          scaleLineColor: 'white',
+          ticks: {
+            fontColor: 'white',
+            scaleLineColor: 'white',
+          },
           gridLines: {
             color: 'white',
           }

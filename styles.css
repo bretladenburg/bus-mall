@@ -1,8 +1,17 @@
-img {
+#sect img {
   width: 250px;
   height: 250px;
   cursor: pointer;
-  padding: 5px
+  padding: 5px;
+  border: 10px solid #F5811F;
+  border-radius: 10%;
+}
+
+
+#sect img:hover {
+  background: #ff7b29;
+  border-radius: 50%;
+  transition-duration: 1s;
 }
 
 h1 {
@@ -35,5 +44,11 @@ background-color: #008D97
 #canvas {
   color: white;
   border: none;
+
+}
+
+#sect img: hover {
+  background: #ff7b29;
+  border-radius: 50%;
 
 }

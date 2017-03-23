@@ -82,10 +82,6 @@ function handleTheClick(event) {
   }
 };
 
-// for(var i = 0; i < itemNumberClicksArray.length; i++){
-//   sumOfDataArray.push(itemNumberClicksArray[i].sumOfUserClicks + sumOfDataArray[i]);
-// }
-
 img1.addEventListener('click', handleTheClick);
 img2.addEventListener('click', handleTheClick);
 img3.addEventListener('click', handleTheClick);

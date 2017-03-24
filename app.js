@@ -1,6 +1,7 @@
 'use strict';
 
-
+var canvas = document.getElementById('canvas');
+var ctx = canvas.getContext('2d');
 var listOfObjectsArray = [];
 var timesShownArray = [];
 var previousImagesIndexArr = [];
@@ -20,6 +21,7 @@ function ProductObject(name, filePath) {
   this.itemClick = 0;
   this.imageShown = 0;
   listOfObjectsArray.push(this);
+  // this.nameTally = 'the ' + name + itemClick;
 }
 
 //writes path prefix for image path
@@ -27,7 +29,7 @@ for (var i = 0; i < itemImagePath.length; i++) {
   var filePath = 'images/' + itemImagePath[i];
   new ProductObject(nameOfObjectsArray[i], filePath);
 }
-function localStorage() {
+function accessLocalStorage() {
   if(localStorage.sumOfDataArray){
     var someNewArray = JSON.parse(localStorage.sumOfDataArray);
     for(var i = 0; i < someNewArray.length; i++){
@@ -69,15 +71,21 @@ function handleTheClick(event) {
   sumOfUserClicks++;
   var productIndex = this.alt;
   listOfObjectsArray[productIndex].itemClick++;
-  timesShownArray.push(listOfObjectsArray[productIndex].imageShown);
-  itemNumberClicksArray.push(listOfObjectsArray[productIndex].itemClick);
+  // timesShownArray.push(listOfObjectsArray[productIndex].imageShown);
+  // itemNumberClicksArray.push(listOfObjectsArray[productIndex].itemClick);
 
   if (sumOfUserClicks === clickLimit) {
-    localStorage();
+    accessLocalStorage();
     localStorage.sumOfDataArray = JSON.stringify(listOfObjectsArray);
     img1.removeEventListener('click', handleTheClick);
     img2.removeEventListener('click', handleTheClick);
     img3.removeEventListener('click', handleTheClick);
+    for (var i = 0; i < listOfObjectsArray.length; i++) {
+      itemNumberClicksArray.push(listOfObjectsArray[i].itemClick);
+      timesShownArray.push(listOfObjectsArray[i].imageShown);
+    }
+    console.log('hello' ,itemNumberClicksArray);
+    console.log('hello', timesShownArray);
     renderChart();
   }
 };
@@ -86,8 +94,14 @@ img1.addEventListener('click', handleTheClick);
 img2.addEventListener('click', handleTheClick);
 img3.addEventListener('click', handleTheClick);
 
-var canvas = document.getElementById('canvas');
-var ctx = canvas.getContext('2d');
+function resetData() {
+  var confirmReset = confirm('This will erase all previous results and start a new session, are you sure?');
+  if (confirmReset) {
+    localStorage.clear();
+    window.location.reload();
+  }
+}
+resetBtn.addEventListener('click', resetData);
 
 function renderChart() {
   var data = {
@@ -135,8 +149,3 @@ function renderChart() {
     }
   });
 };
-///////////////////////////////////////
-/////////////
-///////////// local storage
-/////////////
-///////////////////////////////////////

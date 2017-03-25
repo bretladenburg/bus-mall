@@ -71,8 +71,6 @@ function handleTheClick(event) {
   sumOfUserClicks++;
   var productIndex = this.alt;
   listOfObjectsArray[productIndex].itemClick++;
-  // timesShownArray.push(listOfObjectsArray[productIndex].imageShown);
-  // itemNumberClicksArray.push(listOfObjectsArray[productIndex].itemClick);
 
   if (sumOfUserClicks === clickLimit) {
     accessLocalStorage();

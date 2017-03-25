@@ -47,8 +47,19 @@ background-color: #008D97
 
 }
 
-#sect img: hover {
+#sect img:hover {
   background: #ff7b29;
   border-radius: 50%;
 
+}
+
+#resetBtn {
+  border-radius: 10px;
+  font-family: Quicksand;
+  color: white;
+  background-color: #ff7b29;
+}
+
+#button-div {
+  text-align: center;
 }

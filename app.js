@@ -14,17 +14,14 @@ var img1 = document.getElementById('img-1');
 var img2 = document.getElementById('img-2');
 var img3 = document.getElementById('img-3');
 
-//object constructor
 function ProductObject(name, filePath) {
   this.name = name;
   this.filePath = filePath;
   this.itemClick = 0;
   this.imageShown = 0;
   listOfObjectsArray.push(this);
-  // this.nameTally = 'the ' + name + itemClick;
 }
 
-//writes path prefix for image path
 for (var i = 0; i < itemImagePath.length; i++) {
   var filePath = 'images/' + itemImagePath[i];
   new ProductObject(nameOfObjectsArray[i], filePath);
@@ -71,8 +68,6 @@ function handleTheClick(event) {
   sumOfUserClicks++;
   var productIndex = this.alt;
   listOfObjectsArray[productIndex].itemClick++;
-  // timesShownArray.push(listOfObjectsArray[productIndex].imageShown);
-  // itemNumberClicksArray.push(listOfObjectsArray[productIndex].itemClick);
 
   if (sumOfUserClicks === clickLimit) {
     accessLocalStorage();
